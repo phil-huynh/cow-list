@@ -11,22 +11,50 @@ var cowData = [
   {
     name: 'Milkshake',
     description: 'a cold drink made of milk, a sweet flavoring such as fruit or chocolate, and typically ice cream, whisked until it is frothy.'
-  }
+  },
+  {
+    name: 'Bessie',
+    description: 'a best or closest friend.'
+  },
+  {
+    name: 'MooDonna',
+    description: 'archaic : lady -- used as a form of respectful address.'
+  },
+  {
+    name: '	MooLawn',
+    description: '	a legendary Chinese warrior from the Northern and Southern dynasties period (420–589) of Chinese history.'
+  },
 ]
-
+import React from 'react'
+import axios from 'axios'
 import AddCow from './AddCow.jsx';
+import DisplayCow from './DisplayCow.jsx'
+
 
 class CowList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cows: cowData,
-      currentCow: null
+      currentCow: ''
     }
     this.handleCowNameClick = this.handleCowNameClick.bind(this);
   }
 
+  getCows() {
+    axios.get('api/cows')
+      .then((res) => {
+        this.setState({
+          cows: res.data
+        })
+      })
+      .catch((err) => {
+        console.log(`error: ${err}`)
+      })
+  }
+
   handleCowNameClick(cow) {
+    console.log(cow)
     this.setState({
       currentCow: cow
     })
@@ -37,8 +65,8 @@ class CowList extends React.Component {
       <div>
         <h1>Cow List</h1>
         <div>
-          {this.state.currentCow != null ? <h3>{this.state.currentCow.name}</h3> : null}
-          {this.state.currentCow != null ? <p>{this.state.currentCow.description}</p> : null}
+          <DisplayCow
+            cow={this.state.currentCow}/>
         </div>
         <div>
           <AddCow />
@@ -48,7 +76,7 @@ class CowList extends React.Component {
             {this.state.cows.map(cow =>
               <li
                 className="cow"
-                onClick={() => this.handleCowNameClick}
+                onClick={() => this.handleCowNameClick(cow)}
                 >
                 {cow.name}
               </li>

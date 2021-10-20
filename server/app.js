@@ -7,11 +7,11 @@ var app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/', express.static(path.join(__dirname, 'public')))
 
 
 
 app.get('/api/cows', (req, res) => {
-  console.log('**** GET is connected ****')
   models.cows.getAll((err, results) => {
     if (err) {
       res.sendStatus(500);
@@ -22,7 +22,6 @@ app.get('/api/cows', (req, res) => {
 })
 
 app.post('/api/cows', (req, res) => {
-  console.log('**** POST is connected ****')
   const { name, description} = req.body;
   var params = [req.body.name, req.body.description];
   models.cows.create(params, (err, results) => {
@@ -31,8 +30,6 @@ app.post('/api/cows', (req, res) => {
     }
     res.sendStatus(200);
   })
-  console.log('#### POST is connected ####')
-
 })
 
 module.exports = app;

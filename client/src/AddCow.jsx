@@ -1,4 +1,5 @@
-
+import React from 'react'
+import axios from 'axios'
 
 class AddCow extends React.Component {
   constructor(props) {
@@ -8,11 +9,26 @@ class AddCow extends React.Component {
       description:''
     }
     this.handleInputChange =  this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(e) {
     this.setState({
       [e.target.name]: [e.target.value]
+    })
+  }
+
+  handleSubmit() {
+    e.preventDefault()
+    axios.post('/api/cows', {
+      name: this.state.name,
+      description: this.state.description
+    })
+    then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(`error: ${err}`)
     })
   }
 
