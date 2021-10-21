@@ -39,6 +39,11 @@ class CowList extends React.Component {
       currentCow: ''
     }
     this.handleCowNameClick = this.handleCowNameClick.bind(this);
+    this.getCows = this.getCows.bind(this);
+  }
+
+  componentDidMount() {
+    this.getCows();
   }
 
   getCows() {
@@ -63,14 +68,14 @@ class CowList extends React.Component {
   render() {
     return (
       <div>
-        <h1>Cow List</h1>
+        <h1>COW LIST</h1>
         <div>
           <DisplayCow
             cow={this.state.currentCow}/>
         </div>
         <div>
-          <AddCow />
-
+          <AddCow
+          getCows = {this.getCows}/>
         </div>
           <ul>
             {this.state.cows.map(cow =>
