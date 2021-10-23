@@ -18,8 +18,7 @@ class AddCow extends React.Component {
     })
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
+  handleSubmit() {
     axios.post('/api/cows', {
       name: this.state.name,
       description: this.state.description
